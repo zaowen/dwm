@@ -33,7 +33,7 @@ static const Rule rules[] = {
 	{ "htop",       NULL,       NULL,       1 << 4,       0,           -1 },
 	{ "boat",       NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "mpv",        NULL,       NULL,       1 << 8,       1,           -1 },
-	//{ NULL,         NULL,       "weechat",  1 << 4,       0,           -1 },
+	{ "irssi",      NULL,       NULL,       1 << 7,       0,           -1 },
 };
 
 /* layout(s) */
@@ -69,14 +69,15 @@ static const char *termcmd[]  = { "st", "-e", "zsh" };
 static const char *ncmcmd[]  = { "st", "-c", "ncmpcpp", "-e", "ncmpcpp" };
 static const char *updatecmd[]  = { "st", "-e", "~/bin/update.sh" };
 
+#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	//{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	//{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
@@ -85,9 +86,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[2]} },
-	//{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-//	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
